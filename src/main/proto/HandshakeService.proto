@@ -1,10 +1,13 @@
 syntax = "proto3";
+import "google/rpc/status.proto";
 option java_multiple_files = true;
 package com.service.codegen;
+
 
 message HandshakeRequest {
   string firstName = 1;
   string lastName = 2;
+  string securityToken = 3;
 }
 
 message HandshakeResponse {
@@ -12,5 +15,11 @@ message HandshakeResponse {
 }
 
 service HandshakeService {
-  rpc hello(HandshakeRequest) returns (HandshakeResponse);
+  rpc hello(stream HandshakeRequest) returns (stream StreamingHandshakeResponse) {};
+}
+message StreamingHandshakeResponse {
+  oneof message{
+    HandshakeResponse handshakeResponse = 1;
+    google.rpc.Status status = 2;
+  }
 }

@@ -9,9 +9,11 @@ public class GrpcServer {
     public static void main(String[] args) throws InterruptedException, IOException {
         Server server = ServerBuilder
                 .forPort(8080)
-                .addService(new HandshakeServiceImpl()).build();
+                .addService(new HandshakeServiceImpl())
+                .build();
 
         server.start();
+        System.out.println("***SERVER STARTED***");
         server.awaitTermination();
     }
 }
